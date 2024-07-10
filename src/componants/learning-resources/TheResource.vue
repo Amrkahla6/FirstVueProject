@@ -67,6 +67,8 @@
                 this.storedResources.unshift(newResource);
                 this.selectedTab = 'stored-resources';
 
+            },RemoveResource(resourceId){
+                
             }
         }
     }

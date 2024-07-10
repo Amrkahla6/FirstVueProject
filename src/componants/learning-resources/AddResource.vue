@@ -1,4 +1,15 @@
 <template>
+
+    <base-dialog v-if="this.inputIsInvalid" title="Invalid Input" @close="confirmErrror">
+        <template #default>
+            <p>Unfortunatly one input field is invalid</p>
+            <p>Please check all inputs are not empty</p>
+        </template>
+        <template #actions>
+            <base-button @click="confirmErrror">Okay</base-button>
+        </template>
+    </base-dialog>
+
     <base-card>
         <form @submit.prevent="submitData">
             <div class="form-control">
@@ -24,9 +35,17 @@
 </template>
 
 <script>
+import BaseButton from '../UI/BaseButton.vue';
     export default{
+  components: { BaseButton },
 
         inject : ['AddResource'],
+
+        data(){
+            return {
+                inputIsInvalid: false
+            }
+        },
 
         methods:{
             submitData()
@@ -35,8 +54,16 @@
                 const enterdDesc  = this.$refs.descriptionInput.value;
                 const enterLink   = this.$refs.linkInput.value;
 
-               
+               if(enterdTitle.trim() === '' || enterdDesc.trim() === '' || enterLink.trim() === '')
+               {
+                this.inputIsInvalid = true;
+                return ;
+               }
                 this.AddResource(enterdTitle,enterdDesc,enterLink)
+            },
+            confirmErrror()
+            {
+                this.inputIsInvalid = false;
             }
         }
     }
