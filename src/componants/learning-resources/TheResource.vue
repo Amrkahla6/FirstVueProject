@@ -41,7 +41,8 @@
         },provide(){
             return {
                 resources : this.storedResources,
-                AddResource : this.AddResource
+                AddResource : this.AddResource,
+                deleteResource : this.RemoveResource
             }
         },computed:{
             storedRestButtonMood()
@@ -68,7 +69,9 @@
                 this.selectedTab = 'stored-resources';
 
             },RemoveResource(resourceId){
-                
+               const resIndex = this.storedResources.findIndex( res => res.id ===  resourceId);
+
+               this.storedResources.splice(resIndex,1)
             }
         }
     }
